@@ -28,9 +28,9 @@ mongoose.set('debug', true);
 mongoose.Promise = global.Promise;
 
 // Connecting to the MongoDB database
-mongoose.connect(`mongodb://127.0.0.1:27017/${databaseName}`)
+mongoose.connect(`mongodb://127.0.0.1:27017/dhaw`)
     .then(() => {
-        console.log(`Connected to ${databaseName}`);
+        console.log(`Connected to the MongoDB database`);
     })
     .catch((error) => {
         console.log(error);
