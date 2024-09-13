@@ -30,4 +30,4 @@ USER node
 EXPOSE 3000
 
 # This sets the default command to run when the container is started.
-CMD ["node", "server.js"]
+CMD ["node", "index.js"]
