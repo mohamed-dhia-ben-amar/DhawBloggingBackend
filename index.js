@@ -21,10 +21,20 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-// MongoDB connection
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log('MongoDB connected...'))
-    .catch(err => console.error('MongoDB connection error:', err));
+// Enabling debug mode for mongoose
+mongoose.set('debug', true);
+
+// Setting the global Promise library
+mongoose.Promise = global.Promise;
+
+// Connecting to the MongoDB database
+mongoose.connect(`mongodb://127.0.0.1:27017/${databaseName}`)
+    .then(() => {
+        console.log(`Connected to ${databaseName}`);
+    })
+    .catch((error) => {
+        console.log(error);
+    });
 
 // Routes
 app.use('/users', require('./routes/userRoutes'));
