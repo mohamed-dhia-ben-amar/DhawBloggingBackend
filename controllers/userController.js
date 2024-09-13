@@ -3,13 +3,14 @@ const bcrypt = require('bcrypt');
 const User = require('../models/userModel');
 
 const generateToken = (user) => {
-    return jwt.sign({ id: user._id, isAdmin: user.isAdmin }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    return jwt.sign({ user: user }, process.env.JWT_SECRET, { expiresIn: '1h' });
 };
 
 const cookieOptions = {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict'
+    secure: false, // Set this to true in production if using HTTPS
+    sameSite: 'None', // Required for cross-origin requests
+    domain: 'localhost',
 };
 
 const signup = async (req, res) => {
@@ -40,7 +41,7 @@ const login = async (req, res) => {
             return res.status(401).json({ message: 'Invalid credentials' });
         }
         const token = generateToken(user);
-        res.cookie('token', token, cookieOptions);
+        res.cookie('token', token);
         res.json({ success: true, message: 'User logged in', user });
     } catch (err) {
         res.status(500).json({ success: false, message: err.message });

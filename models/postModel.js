@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const postSchema = new mongoose.Schema({
     title: {
         type: String,
-        required: true
+        required: false
     },
     content: {
         type: String,
@@ -15,12 +15,12 @@ const postSchema = new mongoose.Schema({
         required: true
     },
     likes: {
-        type: Array,
-        default: []
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: 'User',
     },
     comments: {
-        type: Array,
-        default: []
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: 'Comment',
     },
     image: {
         type: String,
